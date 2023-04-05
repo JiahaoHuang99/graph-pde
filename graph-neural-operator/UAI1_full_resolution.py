@@ -36,7 +36,8 @@ class KernelNN(torch.nn.Module):
 TRAIN_PATH = 'data/piececonst_r241_N1024_smooth1.mat'
 TEST_PATH = 'data/piececonst_r241_N1024_smooth2.mat'
 
-r = 4
+# r = 4
+r = 16
 s = int(((241 - 1)/r) + 1)
 n = s**2
 m = 100
@@ -46,7 +47,6 @@ radius_train = 0.1
 radius_test = 0.1
 
 print('resolution', s)
-
 
 ntrain = 100
 ntest = 40
@@ -237,6 +237,7 @@ t2 = default_timer()
 print('preprocessing finished, time used:', t2-t1)
 device = torch.device('cuda')
 
+# width 64, ker_width 1024, depth 6, edge_features 6, node_features 6
 model = KernelNN(width,ker_width,depth,edge_features,node_features).cuda()
 
 optimizer = torch.optim.Adam(model.parameters(), lr=learning_rate, weight_decay=5e-4)

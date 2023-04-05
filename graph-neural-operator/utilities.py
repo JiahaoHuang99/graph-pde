@@ -230,7 +230,7 @@ class SquareMeshGenerator(object):
     def __init__(self, real_space, mesh_size):
         super(SquareMeshGenerator, self).__init__()
 
-        self.d = len(real_space)
+        self.d = len(real_space)  # d dimension
         self.s = mesh_size[0]
 
         assert len(mesh_size) == self.d
@@ -248,8 +248,8 @@ class SquareMeshGenerator(object):
             self.grid = np.vstack([xx.ravel() for xx in np.meshgrid(*grids)]).T
     
     def ball_connectivity(self, r):
-        pwd = sklearn.metrics.pairwise_distances(self.grid)
-        self.edge_index = np.vstack(np.where(pwd <= r))
+        pwd = sklearn.metrics.pairwise_distances(self.grid)  # pwd: pair-wise distance: Arr(N_i, N_j). Arr_ij: the distance between ith & jth point.
+        self.edge_index = np.vstack(np.where(pwd <= r))  # Index_A & Index_B of the data on the condition
         self.n_edges = self.edge_index.shape[1]
 
         return torch.tensor(self.edge_index, dtype=torch.long)
